@@ -1,0 +1,86 @@
+<template>
+  <el-card
+      class="route-card"
+      shadow="always"
+      @click="handleClick"
+  >
+    <div class="card-header">
+      <h2>{{ route.origin }} - {{ route.destination }}</h2>
+    </div>
+    <div class="card-body">
+      <p><strong>Start:</strong> {{ route.origin }}</p>
+      <p><strong>Destination:</strong> {{ route.destination }}</p>
+    </div>
+  </el-card>
+</template>
+
+<script setup>
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+
+const props = defineProps({
+  route: {
+    type: Object,
+    required: true
+  }
+});
+
+const router = useRouter();
+
+const handleClick = () => {
+  const category = 'elCard';
+  const action = 'Click';
+  const name = getTrackContent(props.route);
+  trackEvent(category, action, name);
+  router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination } });
+
+  _paq.push(['trackContentInteraction', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
+};
+
+const getTrackContent = (route) => {
+  return `${route.origin} -> ${route.destination}`;
+};
+
+const getTrackTarget = (route) => {
+  return 'Search';
+};
+
+const trackEvent = (category, action, name) => {
+  const _paq = window._paq = window._paq || [];
+  _paq.push(['trackEvent', category, action, name]);
+  _paq.push(['logAllContentBlocksOnPage']);
+};
+</script>
+
+<style scoped>
+.route-card {
+  width: 300px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #fff;
+  border: 1px solid #ff0000;
+  cursor: pointer;
+}
+
+.route-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  background-color: #ff0000;
+  color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-body p {
+  margin: 5px 0;
+}
+</style>

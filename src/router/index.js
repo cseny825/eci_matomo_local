@@ -3,11 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Recommend from '@/components/Recommend.vue'
 import Search from '@/components/Search.vue'
 import Detail from '@/components/Detail.vue'
+import SearchResult from "@/components/SearchResult.vue";
 
 const routes = [
-    { path: '/', component: Recommend },
-    { path: '/search', component: Search },
-    { path: '/detail/:id', component: Detail, props: true }
+    { path: '/', redirect: '/app/dashboard', component: Recommend },
+    { path: '/app/dashboard', component: Recommend },
+    { path: '/digital/product/search-quote', component: Search },
+    { path: '/digital/product/search-result', component: SearchResult },
+    { path: '/digital/product/pre-book', component: Detail, props: true }
 ]
 
 const router = createRouter({

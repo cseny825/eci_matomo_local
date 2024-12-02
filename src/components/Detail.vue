@@ -16,7 +16,7 @@ const route = useRoute()
 const product = ref({})
 
 onMounted(() => {
-  const productId = route.params.id
+  const productId = route.params.productUniqueKey
   // Fetch product details based on the productId
   // For simplicity, we use hardcoded data here
   const products = [
