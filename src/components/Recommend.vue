@@ -21,11 +21,22 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Card from './Card.vue'; // 引入 Card 组件
 
-const router = useRouter();
+const router = useRouter()
+const goToSearch = (route) => {
+  const query = {
+    origin: route.origin,
+    destination: route.destination,
+    pk_abe: 'recommendFunction',
+    pk_abv: route.pk_abv,
+    matomo_campaign: 'search_condition'
+  }
+  router.push({ path: '/search', query })
+}
+
 const routes = ref([
-  { origin: 'New York', destination: 'Los Angeles' },
-  { origin: 'San Francisco', destination: 'Chicago' },
-  { origin: 'Miami', destination: 'Houston' },
+  { origin: 'New York', destination: 'Los Angeles', pk_abv: 'price' },
+  { origin: 'San Francisco', destination: 'Chicago', pk_abv: 'original' },
+  { origin: 'Miami', destination: 'Houston', pk_abv: 'price' },
   // 添加更多航线信息
 ]);
 

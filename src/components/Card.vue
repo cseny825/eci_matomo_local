@@ -3,6 +3,7 @@
       class="route-card"
       shadow="always"
       @click="handleClick"
+      @mouseover="handleMouseOver"
   >
     <div class="card-header">
       <h2>{{ route.origin }} - {{ route.destination }}</h2>
@@ -32,8 +33,8 @@ const handleClick = () => {
   const action = 'Click';
   const name = getTrackContent(props.route);
   trackEvent(category, action, name);
-  router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination } });
-
+  router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination} });
+  _paq.push(['trackEvent', 'abtesting', 'recommendFunction', props.route.pk_abv]);
   _paq.push(['trackContentInteraction', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
 };
 
@@ -49,6 +50,10 @@ const trackEvent = (category, action, name) => {
   const _paq = window._paq = window._paq || [];
   _paq.push(['trackEvent', category, action, name]);
   _paq.push(['logAllContentBlocksOnPage']);
+};
+
+const handleMouseOver = () => {
+  // _paq.push(['trackEvent', "Card", 'Card MouseOver', props.route.origin + '_' + props.route.destination]);
 };
 </script>
 
