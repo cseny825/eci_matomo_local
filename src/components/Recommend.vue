@@ -14,6 +14,9 @@
   <button @click="navigateToSearchQuote({ from: 'Dashboard', to: 'Search Quote' })" class="btn">
     Dashboard -> Search Quote
   </button>
+  <button @click="addProduct()" class="btn">
+    Add Product
+  </button>
 </template>
 
 <script setup>
@@ -34,9 +37,9 @@ const goToSearch = (route) => {
 }
 
 const routes = ref([
-  { origin: 'New York', destination: 'Los Angeles', pk_abv: 'price' },
+  { origin: 'New York', destination: 'Los Angeles', pk_abv: 'precise' },
   { origin: 'San Francisco', destination: 'Chicago', pk_abv: 'original' },
-  { origin: 'Miami', destination: 'Houston', pk_abv: 'price' },
+  { origin: 'Miami', destination: 'Houston', pk_abv: 'precise' },
   // 添加更多航线信息
 ]);
 
@@ -45,6 +48,23 @@ const navigateToSearchQuote = (route) => {
     path: '/digital/product/search-quote',
     query: { from: route.from, to: route.to }
   });
+};
+
+const addProduct = () => {
+  // Push Product View Data to Matomo - Populate parameters dynamically
+  _paq.push(['setEcommerceView',
+    "2", // (Required) productSKU
+    "Product 2", // (Optional) productName
+    "Category 2", // (Optional) categoryName
+    200 // (Optional) price
+  ]);
+  _paq.push(['trackPageView']);
+  // _paq.push(['setEcommerceView',
+  //   false, // Product name is not applicable for a category view.
+  //   false, // Product SKU is not applicable for a category view.
+  //   "Category 1", // (Optional) Product category, or array of up to 5 categories
+  // ]);
+  // _paq.push(['trackPageView']);
 };
 
 onMounted(() => {

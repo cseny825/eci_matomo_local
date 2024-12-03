@@ -23,21 +23,21 @@ export default {
       {
         title: 'Flight from New York to Los Angeles',
         description: 'Direct flight, 6 hours',
-        productUniqueKey: 'e3733952-c6e1-4001-a001-001',
+        productUniqueKey: 1,
         from: 'New York',
         to: 'Los Angeles'
       },
       {
         title: 'Train from London to Paris',
         description: 'Eurostar, 2 hours 16 minutes',
-        productUniqueKey: 'e3733952-c6e1-4001-a002-002',
+        productUniqueKey: 2,
         from: 'London',
         to: 'Paris'
       },
       {
         title: 'Bus from Tokyo to Seoul',
         description: 'Overnight bus, 15 hours',
-        productUniqueKey: 'e3733952-c6e1-4001-a003-003',
+        productUniqueKey: 3,
         from: 'Tokyo',
         to: 'Seoul'
       },
