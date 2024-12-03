@@ -44,6 +44,7 @@ export default {
     ]);
 
     const navigateToPreBook = (result) => {
+      _paq.push(['trackEvent', 'viewDetail', 'product', result.title]);
       router.push({
         path: '/digital/product/pre-book',
         query: {
