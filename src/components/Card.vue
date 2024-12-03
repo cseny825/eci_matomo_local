@@ -1,7 +1,6 @@
 <template>
-  <el-card
-      class="route-card"
-      shadow="always"
+  <div
+      class="custom-card"
       @click="handleClick"
       @mouseover="handleMouseOver"
   >
@@ -12,7 +11,7 @@
       <p><strong>Start:</strong> {{ route.origin }}</p>
       <p><strong>Destination:</strong> {{ route.destination }}</p>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script setup>
@@ -29,13 +28,13 @@ const props = defineProps({
 const router = useRouter();
 
 const handleClick = () => {
-  const category = 'elCard';
+  const category = 'globalCard';
   const action = 'Click';
   const name = getTrackContent(props.route);
   trackEvent(category, action, name);
   router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination} });
   _paq.push(['trackEvent', 'abtesting', 'recommendFunction', props.route.pk_abv]);
-  _paq.push(['trackContentInteraction', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
+  _paq.push(['trackContentInteraction', 'cardClicked', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
 };
 
 const getTrackContent = (route) => {
@@ -58,7 +57,7 @@ const handleMouseOver = () => {
 </script>
 
 <style scoped>
-.route-card {
+.custom-card {
   width: 300px;
   margin-bottom: 20px;
   border-radius: 10px;
@@ -69,7 +68,7 @@ const handleMouseOver = () => {
   cursor: pointer;
 }
 
-.route-card:hover {
+.custom-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
