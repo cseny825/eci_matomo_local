@@ -8,6 +8,7 @@
           v-for="(route, index) in routes"
           :key="index"
           :route="route"
+          cardCategory="Global"
       />
     </div>
   </div>
@@ -83,12 +84,12 @@ const getTrackTarget = (route) => {
 
 const trackImpression = (contentName, contentPiece, contentTarget) => {
   const _paq = window._paq = window._paq || [];
-  _paq.push(['trackContentImpression', "Global Product Recommendations", contentName, contentTarget]);
+  _paq.push(['trackContentImpression', "Global", contentName, contentTarget]);
 };
 </script>
 
 <style scoped>
-
+@import '../assets/styles/CardContainer.css';
 
 .content-wrapper {
   width: 100%;
@@ -104,13 +105,6 @@ const trackImpression = (contentName, contentPiece, contentTarget) => {
   margin-bottom: 20px;
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 80%;
-}
 
 .btn {
   margin: 10px;

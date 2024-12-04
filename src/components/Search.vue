@@ -1,5 +1,15 @@
 <template>
   <div class="search-container">
+    <h1>Recent Searches</h1>
+    <div class="card-container">
+      <Card
+          v-for="(route, index) in recentSearcheList"
+          :key="index"
+          :route="route"
+          cardCategory='Recent Searches'
+      />
+    </div>
+
     <h1>Product Search</h1>
     <form class="search-form">
       <label for="origin">Start:</label>
@@ -8,16 +18,14 @@
       <input type="text" id="destination" v-model="destination" />
       <button type="button" @click="searchProducts">Search</button>
     </form>
-    <div v-if="products.length" class="product-list">
-      <div
-          v-for="(product, index) in products"
+    <h1>Recommended For You</h1>
+    <div class="card-container">
+      <Card
+          v-for="(route, index) in recommendedForYouList"
           :key="index"
-          class="product-card"
-          @click="goToDetail(product.id)"
-      >
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-      </div>
+          :route="route"
+          cardParam="Recommended For You"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +33,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import Card from "@/components/Card.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -34,13 +43,9 @@ const destination = ref(route.query.destination || 'default destination')
 const products = ref([])
 
 const searchProducts = () => {
-  products.value = [
-    { id: 1, name: 'Product 1', description: 'Description of Product 1' },
-    { id: 2, name: 'Product 2', description: 'Description of Product 2' },
-    { id: 3, name: 'Product 3', description: 'Description of Product 3' },
-  ]
 
-  const query = `${encodeURIComponent(origin.value)},${encodeURIComponent(destination.value)},CY,CY`;
+  // const query = `${encodeURIComponent(origin.value)},${encodeURIComponent(destination.value)},CY,CY`;
+  const query = `${encodeURIComponent(origin.value)} -> ${encodeURIComponent(destination.value)}`;
   if (origin.value.trim() && destination.value.trim()) {
     router.push({
       path: '/digital/product/search-result'
@@ -57,16 +62,49 @@ const searchProducts = () => {
   }
 }
 
+const recentSearcheList = ref([
+  { origin: 'New York', destination: 'Los Angeles', pk_abv: 'precise' },
+  { origin: 'San Francisco', destination: 'Chicago', pk_abv: 'original' },
+  { origin: 'Miami', destination: 'Houston', pk_abv: 'precise' },
+  // 添加更多航线信息
+]);
+
+const recommendedForYouList = ref([
+  { origin: 'New York', destination: 'Los Angeles', pk_abv: 'precise' },
+  { origin: 'San Francisco', destination: 'Chicago', pk_abv: 'original' },
+  { origin: 'Miami', destination: 'Houston', pk_abv: 'precise' },
+  // 添加更多航线信息
+]);
+
 const goToDetail = (id) => {
   router.push(`/detail/${id}`)
 }
 
 onMounted(() => {
-  // searchProducts()
-})
+  recentSearcheList.value.forEach(route => {
+    trackImpression('Recent Searches', getTrackContent(route), null, getTrackTarget(route));
+  });
+  recommendedForYouList.value.forEach(route => {
+    trackImpression("Recommended For You", getTrackContent(route), null, getTrackTarget(route));
+  });
+});
+const trackImpression = (category, contentName, contentPiece, contentTarget) => {
+  const _paq = window._paq = window._paq || [];
+  _paq.push(['trackContentImpression', category, contentName, contentTarget]);
+};
+
+const getTrackContent = (route) => {
+  return `${route.origin} -> ${route.destination}`;
+};
+
+const getTrackTarget = (route) => {
+  return 'Search';
+};
 </script>
 
 <style scoped>
+@import '../assets/styles/CardContainer.css';
+
 .search-container {
   display: flex;
   flex-direction: column;

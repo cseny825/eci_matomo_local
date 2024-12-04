@@ -22,6 +22,10 @@ const props = defineProps({
   route: {
     type: Object,
     required: true
+  },
+  cardCategory: {
+    type: String,
+    required: true
   }
 });
 
@@ -34,7 +38,8 @@ const handleClick = () => {
   router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination} });
   _paq.push(['trackEvent', 'abtesting', 'recommendFunction', props.route.pk_abv]);
   trackEvent(category, action, name);
-  _paq.push(['trackContentInteraction', 'cardClicked', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
+  _paq.push(['trackContentInteraction', 'cardClicked', props.cardCategory, getTrackContent(props.route), getTrackTarget(props.route)]);
+  _paq.push(['trackSiteSearch', getTrackContent(props.route), props.cardCategory, 1]);
 };
 
 const getTrackContent = (route) => {
