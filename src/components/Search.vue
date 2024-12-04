@@ -39,6 +39,22 @@ const searchProducts = () => {
     { id: 2, name: 'Product 2', description: 'Description of Product 2' },
     { id: 3, name: 'Product 3', description: 'Description of Product 3' },
   ]
+
+  const query = `${encodeURIComponent(origin.value)},${encodeURIComponent(destination.value)},CY,CY`;
+  if (origin.value.trim() && destination.value.trim()) {
+    router.push({
+      path: '/digital/product/search-result'
+    });
+
+    _paq.push(['trackSiteSearch', query, "Input", 1]);
+
+    // var searchCount = 15; // set this value when rendering the search result page
+    // _paq.push(['setCustomUrl', document.URL + '&search_count=' + searchCount]);
+    // _paq.push(['setCustomUrl', document.URL]);
+    // _paq.push(['trackPageView']);
+  } else {
+    alert('Please enter both start and destination.');
+  }
 }
 
 const goToDetail = (id) => {
@@ -46,7 +62,7 @@ const goToDetail = (id) => {
 }
 
 onMounted(() => {
-  searchProducts()
+  // searchProducts()
 })
 </script>
 
