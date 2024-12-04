@@ -31,9 +31,9 @@ const handleClick = () => {
   const category = 'globalCard';
   const action = 'Click';
   const name = getTrackContent(props.route);
-  trackEvent(category, action, name);
   router.push({ path: '/digital/product/search-result', query: { origin: props.route.origin, destination: props.route.destination} });
   _paq.push(['trackEvent', 'abtesting', 'recommendFunction', props.route.pk_abv]);
+  trackEvent(category, action, name);
   _paq.push(['trackContentInteraction', 'cardClicked', "Global Product Recommendations", getTrackContent(props.route), getTrackTarget(props.route)]);
 };
 
